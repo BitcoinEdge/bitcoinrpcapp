@@ -29,7 +29,7 @@
     "mongodb": "^2.2.21",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "bitcointest": "^0.4.4",
+    "bitcointest": "^0.4.5",
     "bcrpc": "^0.0.5"
   },
   "devDependencies": {}

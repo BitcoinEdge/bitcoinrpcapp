@@ -138,11 +138,23 @@ describe('db', () => {
 
 describe('bitcoind', () => {
   it('can be found', (done) => {
-    const bitcoinPath = process.env.BITCOIN_PATH || '../src/';
-    net = new BitcoinNet(bitcoinPath, '/tmp/bitcointest/', 22001, 22002);
-    graph = new BitcoinGraph(net);
-    expect(net).to.not.be.null;
-    done();
+      const which = require('which');
+      which('bitcoind', (whichErr, whichPath) => {
+        which('Bitcoin-Qt', (whichErrQT, whichPathQT) => {
+            const bitcoinPath =
+              process.env.BITCOIN_PATH ||
+              (!whichErr && whichPath
+                ? whichPath.substr(0, whichPath.length - 8)
+                : (!whichErrQT && whichPathQT
+                   ? whichPathQT.substr(0, whichPathQT.length - 10)
+                   : '../bitcoin/src/'));
+             net = new BitcoinNet(bitcoinPath, '/tmp/bitcointest/', 22001, 22002);
+             graph = new BitcoinGraph(net);
+             // TODO: below checks absolutely nothing
+             expect(net).to.not.be.null;
+             done();
+        });
+      });
   });
 });
 
